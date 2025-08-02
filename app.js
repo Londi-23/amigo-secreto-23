@@ -1,40 +1,51 @@
-//Variables
-/* 
-comerntarios parrafo 
-*/
-let numeroMaximoPosible = 10;
-let numeroSecreto = Math.floor(Math.random() * numeroMaximoPosible) + 1;
-let numeroUsuario = 0;
-let intentos = 1;
-//let palabraVeces = "vez";
-let maximoIntents = 3;
+// El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. Aquí deberás desarrollar la lógica para resolver el problema.
+let amigos =[]; 
 
-console.log(numeroSecreto);
-
-while (numeroUsuario != numeroSecreto){
-    //const numero = prompt("Introduce un número:");
-    let numeroUsuario = parseInt(prompt(`Me inidcas un numero por favor entre 1 y ${numeroMaximoPosible} por favor`));
-
-    console.log(typeof(numeroUsuario));
-
-    if (numeroUsuario == numeroSecreto){
-        //comilla invertida para incluir variables
-        alert(`Acertaste, el numero es: ${numeroUsuario}. lo hiciste en ${intentos} ${intentos == 1 ? 'vez' :'veces'} `);
-        //alert('Acertaste, el numero es: '+ numeroUsuario);
-    } else{
-        if(numeroUsuario > numeroSecreto){
-            alert('El numero secreto es menor');
-        } else {
-            alert('El numero secreto es mayor');
-        }
-        //Incrementa cuando no acierta
-        //intentos = intentos + 1;
-        //intentos += 1;
-        intentos++; 
-        palabraVeces = 'veces';
-        if (intentos > maximoIntents){
-            alert(`Superaste los ${maximoIntents} intentos`);
-            break
-        }
+function agregarAmigo() {
+    // Obtener el nombre desde el input
+    let nombreAmigo = document.getElementById('amigo').value;
+    // Validar que no esté vacío
+    if (nombreAmigo === ""){
+        alert("Por favor, inserte un nombre.");
+        return;
     }
-}  
+
+    // Agregar el nombre al arreglo
+    amigos.push(nombreAmigo);
+    document.getElementById('amigo').value = '';
+    document.getElementById('resultado').innerHTML = '';
+    // Mostrar la lista actualizada
+    mostrarAmigos();
+}
+
+function mostrarAmigos(){
+    // Obtener el contenedor de la lista y limpiarlo
+    let lista =document.getElementById('listaAmigos');
+    lista.innerHTML = "";
+
+    // Recorrer el arreglo e insertar cada amigo en la lista
+    for(let i = 0; i < amigos.length; i++){
+        let li = document.createElement('li');
+        li.textContent = amigos[i];
+        lista.appendChild(li);
+    }
+}
+
+function sortearAmigo(){
+     // Mostrar mensaje si no hay amigos para sortear
+    let amigoSecreto = document.getElementById('resultado');
+ 
+    if (amigos.length === 0){
+        amigoSecreto.innerHTML = "No hay amigos para sortear.";
+        return;
+    }
+
+    // Elegir un amigo al azar
+    let seleccionarAmigo = Math.floor(Math.random()*amigos.length);
+    let amigoSorteado = amigos[seleccionarAmigo];
+
+    // Mostrar el resultado y eliminar al amigo sorteado del arreglo
+    amigoSecreto.innerHTML = `El amigo sorteado es: ${amigoSorteado}`;
+    document.getElementById('listaAmigos').innerHTML = '';
+    amigos.splice(seleccionarAmigo, 1);
+}
